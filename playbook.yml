@@ -1,0 +1,20 @@
+---
+- hosts: all
+  become: true
+  gather_facts: False
+  vars_files:
+    - .env.yml
+
+  pre_tasks:
+    - name: Setup Environment variables
+      set_fact:
+        devops_env: "{{ devops_env }}"
+
+    - name: Install python2 for Ansible (Because ubuntu 16.04 don't have python2)
+      raw: test -e /usr/bin/python || (apt-get -y update && apt-get install -y python-minimal)
+      changed_when: False
+
+    - setup: # aka gather_facts
+
+    - name: Update apt cache if needed.
+      apt: update_cache=yes cache_valid_time=3600

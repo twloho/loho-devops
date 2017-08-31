@@ -25,3 +25,13 @@ vagrant halt
 # destroy
 vagrant destroy
 ```
+
+## Configuration Management: Ansible
+
+```shell=
+# Windows isn’t supported for the control machine
+ANSIBLE_HOST_KEY_CHECKING=false ansible-playbook -i inventory --private-key=.vagrant/machines/default/virtualbox/private_key playbook.yml
+
+# or use docker run ansible
+docker run --rm -it -v $(pwd):/ansible/playbooks philm/ansible_playbook playbook.yml -i inventory --private-key=.vagrant/machines/default/virtualbox/private_key
+```
