@@ -1,0 +1,46 @@
+---
+  - name: Install pip
+    apt: name={{ item }} state=present
+    with_items:
+      - python-pip
+
+  - name: Install packages for allowing python to confirm the servers CA certificate
+    pip: name={{ item }} state=present
+    with_items:
+      - urllib3
+      - pyopenssl
+      - ndg-httpsclient
+      - pyasn1
+
+  - name: Install packages for allowing apt to use a repository over HTTPS
+    apt: name={{ item }} state=present
+    with_items:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+
+  - name: Add Docker's official GPG key
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      state: present
+
+  - name: Add repository for docker
+    apt_repository:
+      repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ linux_codename }} stable"
+      state: present
+
+  - name: Install specified Docker version
+    apt:
+      name: docker-ce={{ docker_ce_version }}
+      state: present
+
+  - name: Install docker-compose
+    pip:
+      name: docker-compose=={{ docker_compose_version }}
+      state: present
+
+  - name: Install Python libraries for the Docker Engine API
+    pip: name={{ item }} state=present
+    with_items:
+      - docker-compose==1.9.0
