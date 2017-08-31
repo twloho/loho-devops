@@ -1,0 +1,7 @@
+---
+  - name: Add apache conf files.
+    template:
+      src: ../apache2/default.apache.conf
+      dest: "{{ workspace_path }}/{{ iac_path }}/apache2/sites/{{ item.server_name }}.conf"
+    with_items:
+      - "{{ sites }}"

@@ -20,3 +20,10 @@
       apt: update_cache=yes cache_valid_time=3600
   tasks:
     - include: tasks/docker.yml
+    - include: tasks/apache2.yml
+
+    - name: Start docker-compose up
+      docker_service:
+        project_src: "{{ workspace_path }}/{{ iac_path }}"
+        recreate: always
+        debug: yes
