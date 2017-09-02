@@ -12,3 +12,16 @@ services:
       - ./apache2/php.ini:/usr/local/etc/php/php.ini
       - ./apache2/info.php:/var/www/html/public/info.php
       - /home/ubuntu/sites:/var/www/html
+
+  mariadb:
+    build: ./mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=loho
+      - MYSQL_USER=loho
+      - MYSQL_PASSWORD=secret
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+      - ./mariadb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - /home/ubuntu/data/mariadb:/var/lib/mysql

@@ -1,0 +1,12 @@
+---
+  - name: Create the data folder for mariadb
+    file:
+      path: "{{ workspace_path }}/data/mariadb"
+      state: directory
+
+  - name: Add create database sqls.
+    template:
+      src: ../mariadb/createdb.default.sql
+      dest: "{{ workspace_path }}/{{ iac_path }}/mariadb/docker-entrypoint-initdb.d/createdb-{{ item.name }}.sql"
+    with_items:
+      - "{{ databases }}"

@@ -21,6 +21,7 @@
   tasks:
     - include: tasks/docker.yml
     - include: tasks/apache2.yml
+    - include: tasks/mariadb.yml
 
     - name: Start docker-compose up
       docker_service:
